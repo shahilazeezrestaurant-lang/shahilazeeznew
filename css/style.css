@@ -399,13 +399,43 @@ body {
     color: var(--text);
 }
 
-/* Categories Navigation - Fixed for Mobile */
+/* Mobile Categories Toggle */
+.mobile-categories-toggle {
+    position: sticky;
+    top: 76px;
+    z-index: 1019;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+}
+
+.mobile-categories-toggle .btn {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+.mobile-categories-toggle .btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--accent));
+    color: white;
+}
+
+.mobile-categories-toggle .btn[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.mobile-categories-toggle .fa-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+/* Categories Navigation - Collapsible on Mobile */
 .categories-nav {
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    z-index: 1020;
-    position: sticky;
-    top: 76px; /* Height of navbar */
+    z-index: 1018;
 }
 
 .category-nav-item {
@@ -624,11 +654,13 @@ body {
     }
     
     .categories-nav {
-        top: 66px; /* Adjusted for mobile navbar height */
+        position: static;
+        box-shadow: none;
+        border-top: 1px solid #eee;
     }
     
     .menu-category {
-        scroll-margin-top: 110px; /* Adjusted for mobile */
+        scroll-margin-top: 20px;
     }
     
     .menu-item-price.half-full {
@@ -667,6 +699,16 @@ body {
         margin-bottom: 10px;
         align-self: center;
     }
+    
+    /* Mobile categories collapse animation */
+    #mobileCategoriesCollapse.show {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    #mobileCategoriesCollapse {
+        transition: max-height 0.3s ease;
+    }
 }
 
 @media (max-width: 576px) {
@@ -696,5 +738,9 @@ body {
     
     .section-title {
         font-size: 1.8rem;
+    }
+    
+    .mobile-categories-toggle {
+        top: 66px;
     }
 }
