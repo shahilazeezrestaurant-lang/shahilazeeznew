@@ -45,8 +45,18 @@
         </div>
     </section>
 
+    <!-- Mobile Categories Toggle -->
+    <div class="mobile-categories-toggle d-lg-none">
+        <div class="container">
+            <button class="btn btn-primary w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#mobileCategoriesCollapse">
+                <span>Menu Categories</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Categories Navigation -->
-    <section class="categories-nav py-3">
+    <section class="categories-nav py-3 collapse d-lg-block" id="mobileCategoriesCollapse">
         <div class="container">
             <div class="row" id="categories-nav-grid">
                 <!-- Categories navigation will be loaded dynamically -->
