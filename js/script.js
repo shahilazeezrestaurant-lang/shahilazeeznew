@@ -411,6 +411,7 @@ function loadMenuContent() {
 // Setup menu navigation
 function setupMenuNavigation() {
     const navItems = document.querySelectorAll('.category-nav-item');
+    const mobileCategoriesCollapse = document.getElementById('mobileCategoriesCollapse');
     
     navItems.forEach(item => {
         item.addEventListener('click', function() {
@@ -424,10 +425,16 @@ function setupMenuNavigation() {
             // Add active class to clicked item
             this.classList.add('active');
             
+            // Close mobile categories on mobile after selection
+            if (window.innerWidth < 992) {
+                const bsCollapse = new bootstrap.Collapse(mobileCategoriesCollapse);
+                bsCollapse.hide();
+            }
+            
             // Scroll to category
             const targetElement = document.getElementById(category);
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 120; // Adjusted for mobile
+                const offsetTop = targetElement.offsetTop - 120;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
