@@ -45,21 +45,32 @@
         </div>
     </section>
 
-    <!-- Mobile Categories Toggle -->
-    <div class="mobile-categories-toggle d-lg-none">
-        <div class="container">
-            <button class="btn btn-primary w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#mobileCategoriesCollapse">
-                <span>Menu Categories</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
+    <!-- Floating Categories Toggle Button -->
+    <div class="floating-categories-toggle d-lg-none">
+        <button class="btn btn-primary floating-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#floatingCategories">
+            <i class="fas fa-bars me-2"></i>
+            <span>Categories</span>
+        </button>
+    </div>
+
+    <!-- Floating Categories Panel -->
+    <div class="floating-categories-panel collapse d-lg-none" id="floatingCategories">
+        <div class="floating-categories-header">
+            <h5>Menu Categories</h5>
+            <button class="btn-close" type="button" data-bs-toggle="collapse" data-bs-target="#floatingCategories"></button>
+        </div>
+        <div class="floating-categories-content">
+            <div class="row" id="floating-categories-grid">
+                <!-- Floating categories will be loaded dynamically -->
+            </div>
         </div>
     </div>
 
-    <!-- Categories Navigation -->
-    <section class="categories-nav py-3 collapse d-lg-block" id="mobileCategoriesCollapse">
+    <!-- Desktop Categories Navigation -->
+    <section class="categories-nav py-3 d-none d-lg-block">
         <div class="container">
             <div class="row" id="categories-nav-grid">
-                <!-- Categories navigation will be loaded dynamically -->
+                <!-- Desktop categories navigation will be loaded dynamically -->
             </div>
         </div>
     </section>
