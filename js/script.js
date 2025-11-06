@@ -427,7 +427,7 @@ function setupMenuNavigation() {
             // Scroll to category
             const targetElement = document.getElementById(category);
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 100;
+                const offsetTop = targetElement.offsetTop - 120; // Adjusted for mobile
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
