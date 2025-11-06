@@ -280,7 +280,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load menu navigation and content on menu page
     if (document.getElementById('categories-nav-grid') && document.getElementById('menu-content')) {
-        loadMenuNavigation();
+        loadDesktopMenuNavigation();
+        loadFloatingMenuNavigation();
         loadMenuContent();
         setupMenuNavigation();
     }
@@ -341,8 +342,8 @@ function loadCategoriesGrid() {
     gridContainer.innerHTML = html;
 }
 
-// Load menu navigation
-function loadMenuNavigation() {
+// Load desktop menu navigation
+function loadDesktopMenuNavigation() {
     const navContainer = document.getElementById('categories-nav-grid');
     let html = '';
     
@@ -360,6 +361,27 @@ function loadMenuNavigation() {
     }
     
     navContainer.innerHTML = html;
+}
+
+// Load floating menu navigation for mobile
+function loadFloatingMenuNavigation() {
+    const floatingContainer = document.getElementById('floating-categories-grid');
+    let html = '';
+    
+    for (const [key, category] of Object.entries(menuData)) {
+        html += `
+            <div class="col-6">
+                <div class="floating-category-item" data-category="${key}">
+                    <div class="floating-category-icon">
+                        <i class="fas ${categoryIcons[key]}"></i>
+                    </div>
+                    <div class="floating-category-title">${category.title}</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    floatingContainer.innerHTML = html;
 }
 
 // Load menu content
@@ -410,24 +432,30 @@ function loadMenuContent() {
 
 // Setup menu navigation
 function setupMenuNavigation() {
-    const navItems = document.querySelectorAll('.category-nav-item');
-    const mobileCategoriesCollapse = document.getElementById('mobileCategoriesCollapse');
+    const desktopNavItems = document.querySelectorAll('.category-nav-item');
+    const floatingNavItems = document.querySelectorAll('.floating-category-item');
+    const floatingCategoriesPanel = document.getElementById('floatingCategories');
     
-    navItems.forEach(item => {
+    // Combine all nav items for easier handling
+    const allNavItems = [...desktopNavItems, ...floatingNavItems];
+    
+    allNavItems.forEach(item => {
         item.addEventListener('click', function() {
             const category = this.getAttribute('data-category');
             
             // Remove active class from all items
-            navItems.forEach(navItem => {
+            allNavItems.forEach(navItem => {
                 navItem.classList.remove('active');
             });
             
-            // Add active class to clicked item
-            this.classList.add('active');
+            // Add active class to clicked item and corresponding items
+            document.querySelectorAll(`[data-category="${category}"]`).forEach(item => {
+                item.classList.add('active');
+            });
             
-            // Close mobile categories on mobile after selection
+            // Close floating panel on mobile after selection
             if (window.innerWidth < 992) {
-                const bsCollapse = new bootstrap.Collapse(mobileCategoriesCollapse);
+                const bsCollapse = new bootstrap.Collapse(floatingCategoriesPanel);
                 bsCollapse.hide();
             }
             
@@ -444,8 +472,10 @@ function setupMenuNavigation() {
     });
     
     // Set first category as active by default
-    if (navItems.length > 0) {
-        navItems[0].classList.add('active');
+    if (allNavItems.length > 0) {
+        document.querySelectorAll('[data-category="chicken-mandi"]').forEach(item => {
+            item.classList.add('active');
+        });
     }
     
     // Update active nav item on scroll
@@ -460,18 +490,26 @@ function setupMenuNavigation() {
                 
                 if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
                     // Remove active class from all items
-                    navItems.forEach(navItem => {
+                    allNavItems.forEach(navItem => {
                         navItem.classList.remove('active');
                     });
                     
                     // Add active class to current category
-                    const activeNavItem = document.querySelector(`.category-nav-item[data-category="${key}"]`);
-                    if (activeNavItem) {
-                        activeNavItem.classList.add('active');
-                    }
+                    document.querySelectorAll(`[data-category="${key}"]`).forEach(item => {
+                        item.classList.add('active');
+                    });
                     break;
                 }
             }
         }
+    });
+    
+    // Handle floating panel custom behavior
+    floatingCategoriesPanel.addEventListener('show.bs.collapse', function() {
+        this.style.display = 'block';
+    });
+    
+    floatingCategoriesPanel.addEventListener('hidden.bs.collapse', function() {
+        this.style.display = 'none';
     });
 }
